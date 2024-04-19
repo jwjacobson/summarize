@@ -11,3 +11,4 @@ pytest-mock
 ruff
 pre-commit
 typer
+pytest-cov
