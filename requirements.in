@@ -1,0 +1,13 @@
+ipdb
+pytest
+transformers
+sentencepiece
+torch
+torchvision
+torchaudio
+requests
+coverage
+pytest-mock
+ruff
+pre-commit
+typer
