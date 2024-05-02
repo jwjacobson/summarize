@@ -1,5 +1,5 @@
 import pytest
-from get_books import author_parse
+from ..get_books import author_parse
 
 authors = [
 ('Anonymous', 'Anonymous'), # single name

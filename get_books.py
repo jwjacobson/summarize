@@ -1,5 +1,5 @@
 """
-This module fetches the first page of English-language results from the Gutendex API and creates a dictionary for each book,
+This module contains functions for fetching the first page of English-language results from the Gutendex API and creating a dictionary for each book,
 in which the key is the book's ID and the value is a dictionary containing title, author, and a download link.
 Author names are converted to First Middle Last format.
 """
@@ -11,10 +11,6 @@ def remove_parens(author):
     """
     Remove parentheticals from an author's name, for passing back to author_parse function
     """
-
-    # parens = {'(', ')'}
-
-    # return " ".join([name for name in author.split() if name[0] not in parens and name[-1] not in parens])
     author = author.split()
     for name in author:
         if name[0] == "(":
@@ -49,6 +45,9 @@ def author_parse(author):
 
 
 def author_check(authors):
+    """
+    Find and return a book's (first) author.
+    """
     if not authors:
         return "No author found."
 
@@ -66,6 +65,9 @@ def author_check(authors):
 
 
 def url_check(formats):
+    """
+    Find and return a book's full-text url.
+    """
     if not formats:
         return "No URLs found."
 
@@ -77,7 +79,10 @@ def url_check(formats):
     return url
 
 
-def fetch_books():
+def fetch_default_books():
+    """
+    Download info of the 32 most popular books on Project Gutenberg and return a json of them.
+    """
     base_url = "https://gutendex.com/books?languages=en"
 
     try:
@@ -102,6 +107,9 @@ def fetch_books():
 
 
 def process_books(books):
+    """
+    Create a dictionary of fetched books where the key is an id number and the value contains title, author, and full-text url.
+    """
     book_data = {}
     for book in books:
         title = book.get("title", "No title found.")
@@ -110,12 +118,13 @@ def process_books(books):
         author = author_parse(author_check(authors))
 
         formats = book.get("formats")
-        # ipdb.set_trace()
         url = url_check(formats)
 
         book_data[book["id"]] = {"title": title, "author": author, "url": url}
 
     return book_data
 
-
-# process_books(fetch_books())
+if __name__ == "__main__":
+    books = process_books(fetch_default_books())
+    book_list = [book for book in books]
+    print(book_list)

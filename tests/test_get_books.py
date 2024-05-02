@@ -1,7 +1,8 @@
 import pytest
 import requests
 
-from get_books import fetch_books, process_books, author_check, url_check
+
+from ..get_books import fetch_default_books, process_books, author_check, url_check
 
 def test_gutendex_api():
     base_url = 'https://gutendex.com/books?languages=en'
@@ -10,38 +11,38 @@ def test_gutendex_api():
     assert 'results' in book_request.json()
     assert len(book_request.json()['results']) == 32
 
-def test_fetch_books_success(mocker):
+def test_fetch_default_books_success(mocker):
     mock_response = mocker.Mock()
     mock_response.json.return_value = {'results': ['book1', 'book2']}
     mock_response.raise_for_status.return_value = None
     mocker.patch('requests.get', return_value=mock_response)
 
-    books = fetch_books()
+    books = fetch_default_books()
     assert books == ['book1', 'book2']
 
-def test_fetch_books_http_error(mocker):
+def test_fetch_default_books_http_error(mocker):
     mocker.patch('requests.get', side_effect=requests.exceptions.HTTPError("Http Error"))
 
     with pytest.raises(requests.exceptions.HTTPError):
-        fetch_books()
+        fetch_default_books()
 
-def test_fetch_books_connection_error(mocker):
+def test_fetch_default_books_connection_error(mocker):
     mocker.patch('requests.get', side_effect=requests.exceptions.ConnectionError("Connection Error"))
 
     with pytest.raises(requests.exceptions.ConnectionError):
-        fetch_books()
+        fetch_default_books()
 
-def test_fetch_books_timeout(mocker):
+def test_fetch_default_books_timeout(mocker):
     mocker.patch('requests.get', side_effect=requests.exceptions.Timeout("Timeout Error"))
 
     with pytest.raises(requests.exceptions.Timeout):
-        fetch_books()
+        fetch_default_books()
 
-def test_fetch_books_request_exception(mocker):
+def test_fetch_default_books_request_exception(mocker):
     mocker.patch('requests.get', side_effect=requests.exceptions.RequestException("Exotic Error"))
 
     with pytest.raises(requests.exceptions.RequestException):
-        fetch_books()
+        fetch_default_books()
 
 test_authors_no_list = {
     'name': 'Doe, John'

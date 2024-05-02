@@ -106,18 +106,11 @@ LEGALESE_START_MARKERS = frozenset(("<<THIS ELECTRONIC VERSION OF",))
 LEGALESE_END_MARKERS = frozenset(("SERVICE THAT CHARGES FOR DOWNLOAD",))
 
 
-# def is_valid_utf8(byte_sequence):
-#     try:
-#         byte_sequence.decode("utf-8")
-#         return True
-#     except UnicodeDecodeError:
-#         return False
-
 def is_valid_utf8(byte_sequence):
     try:
-        return isinstance(byte_sequence, str)
-    except Exception as e:
-        print(e)
+        byte_sequence.encode("utf-8")
+        return True
+    except UnicodeDecodeError:
         return False
 
 def strip_headers(text):
@@ -171,8 +164,6 @@ def strip_headers(text):
 def write_text_to_file(url, file_path):
     text_request = requests.get(url, stream=True)
 
-    ipdb.set_trace()
-
     if text_request.status_code != 200:
         raise Exception("Book not found...")
 
@@ -211,79 +202,6 @@ def write_text_to_file(url, file_path):
                 file.write(chunks[key].encode("utf-8"))
 
     return file_path
-
-
-# write_text_to_file("https://gutenberg.org/cache/epub/84/pg84.txt", "./test.txt")
-
-
-# def write_text_to_book(url):
-#     text_request = requests.get(url, stream=True)
-
-#     if text_request.status_code != 200:
-#         raise Exception("Book not found...")
-
-#     chunks = {}
-#     bad_chunks = {}
-#     bad_idx = []
-#     bad_flag = False
-#     idx = 1
-
-#     for chunk in text_request.iter_content(chunk_size=8192):
-#         if is_valid_utf8(chunk):
-#             stripped_chunk = strip_headers(chunk)
-#             chunks[idx] = stripped_chunk
-#         else:
-#             if not bad_flag:
-#                 print("Bad chunks detected.")
-#                 bad_flag = True
-#             bad_chunks[idx] = chunk
-#             bad_idx.append(idx)
-#         idx += 1
-#     # ipdb.set_trace()
-#     if bad_chunks and len(bad_chunks) % 2 == 0:
-#         print("Attempting bad chunk repair.")
-#         countdown = len(bad_idx)
-#         idx = 0
-#         while countdown:
-#             bad_chunks[bad_idx[idx]] = str(bad_chunks[bad_idx[idx]] + bad_chunks[bad_idx[idx + 1]])
-#             del bad_chunks[bad_idx[idx + 1]]
-#             countdown -= 2
-#             idx += 2
-#         chunks = chunks | bad_chunks
-#     elif bad_chunks:
-#         print("Chunks irreparable. The text may contain gaps.")
-
-#     return chunks
-
-# def write_text_to_book(url):
-#     # Check the content-type first
-#     headers = requests.head(url).headers
-#     # if 'Content-Type' not in headers:
-#         # raise Exception("No Content-Type header found.")
-#     # elif 'text/plain' not in headers['Content-Type']:
-#         # raise Exception(f"Unexpected Content-Type: {headers['Content-Type']}")
-
-#     text_request = requests.get(url, stream=True)
-
-#     if text_request.status_code != 200:
-#         raise Exception("Book not found...")
-
-#     chunks = {}
-#     idx = 0
-
-#     for chunk in text_request.iter_content(chunk_size=8192):
-#         stripped_chunk = strip_headers(chunk)
-        
-#         # Try to decode each chunk individually and skip over any bytes that fail.
-#         valid_chars = ''
-#         for char in stripped_chunk.encode('utf-8', errors='replace'):
-#             if ord(char) < 65536:
-#                 valid_chars += char
-        
-#         chunks[idx] = valid_chars
-#         idx += 1
-#     ipdb.set_trace()
-#     return chunks
 
 def write_text_to_book(url):
     response = requests.get(url, stream=True)
