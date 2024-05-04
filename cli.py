@@ -1,6 +1,6 @@
 import typer
 from rich import print, box
-from rich.prompt import Prompt
+from rich.prompt import Prompt, IntPrompt
 from rich.table import Table
 from pathlib import Path
 import ast
@@ -21,21 +21,27 @@ def default_books():
         books = process_books(fetch_default_books())
         with open(filepath,'w') as data:  
             data.write(str(books))
-    ids = {book for book in books}
-    return books, ids
+    book_nums = [book for book in books]
+    return books, book_nums
 
 @app.command()
 def default():
-    books, ids = default_books()
-    table = Table(title="Default Books")
+    books, book_nums = default_books()
+    table = Table(box=box.SQUARE_DOUBLE_HEAD, border_style="magenta")
+    table.add_column('No.')
     table.add_column('[bold cyan]Title', max_width=75, no_wrap=False)
     table.add_column('[bold magenta]Author')
+    table.add_column('[bold yellow]Fulltext URL')
 
-    for book_id in ids:
-        table.add_row(books[book_id]['title'], books[book_id]['author'])
+    for book_num in book_nums:
+        table.add_row(str(book_num), books[book_num]['title'], books[book_num]['author'], f"[yellow]{books[book_num]['url']}")
     print('\n')
     print(table)
     print('\n')
 
+    choice = Prompt.ask("Select a book by number")
+    while int(choice) < 1 or int(choice) > 32:
+        choice = Prompt.ask("[red]Please choose a number between 1 and 32")
+    print(f"You have chosen [bold cyan]{books[int(choice)]['title']}[/bold cyan] by [bold magenta]{books[int(choice)]['author']}[/bold magenta].")
 
     
