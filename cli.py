@@ -27,7 +27,7 @@ def default_books():
 @app.command()
 def default():
     books, book_nums = default_books()
-    table = Table(title="Default Books")
+    table = Table(title="Default Books", box=box.SQUARE_DOUBLE_HEAD, border_style="magenta")
     table.add_column('No.')
     table.add_column('[bold cyan]Title', max_width=75, no_wrap=False)
     table.add_column('[bold magenta]Author')
