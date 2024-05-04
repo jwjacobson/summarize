@@ -5,7 +5,8 @@ from rich.table import Table
 from pathlib import Path
 import ast
 
-from get_books import remove_parens, author_parse, author_check, url_check, fetch_default_books, process_books
+from get_books import fetch_default_books, process_books
+from get_text import write_text_to_file
 
 FILE_DIR = "./files/"
 
@@ -45,10 +46,11 @@ def default():
     while int(choice) < 1 or int(choice) > 32:
         choice = Prompt.ask("[red]Please choose a number between 1 and 32")
     chosen_book = books[int(choice)]
-    if len(chosen_book)
     
     print(f"You have chosen [bold cyan]{chosen_book['title']}[/bold cyan] by [bold magenta]{chosen_book['author']}[/bold magenta].")
-    filepath = FILE_DIR+choice+chosen_book['title'].split()[0]
-    print(filepath)
+    filepath = FILE_DIR+choice+chosen_book['short_title']+'.txt'
+    print("[italic yellow]\nRetrieving book text...[/italic yellow]")
+    write_text_to_file(chosen_book['url'], filepath)
+
 
     

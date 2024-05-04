@@ -160,7 +160,6 @@ def strip_headers(text):
 
     return str(sep.join(out), encoding="utf-8")
 
-
 def write_text_to_file(url, file_path):
     text_request = requests.get(url, stream=True)
 
@@ -174,34 +173,51 @@ def write_text_to_file(url, file_path):
         idx = 1
 
         for chunk in text_request.iter_content(chunk_size=8192):
-            if is_valid_utf8(chunk):
-                stripped_chunk = strip_headers(chunk)
-                chunks[idx] = stripped_chunk
-            else:
-                print(f"Chunk {idx} invalid")
-                bad_chunks[idx] = chunk
-                bad_idx.append(idx)
-            idx += 1
-        # ipdb.set_trace()
-        if bad_chunks and len(bad_chunks) % 2 == 0:
-            countdown = len(bad_idx)
-            idx = 0
-            while countdown:
-                bad_chunks[bad_idx[idx]] = str(
-                    bad_chunks[bad_idx[idx]] + bad_chunks[bad_idx[idx + 1]]
-                )
-                del bad_chunks[bad_idx[idx + 1]]
-                countdown -= 2
-                idx += 2
-            chunks = chunks | bad_chunks
-        elif bad_chunks:
-            raise Exception("Bad book data :(")
-
-        for key in range(1, idx):
-            if chunks.get(key):
-                file.write(chunks[key].encode("utf-8"))
+            file.write(chunk)
 
     return file_path
+
+# def write_text_to_file(url, file_path):
+#     text_request = requests.get(url, stream=True)
+
+#     if text_request.status_code != 200:
+#         raise Exception("Book not found...")
+
+#     with open(file_path, "wb") as file:
+#         chunks = {}
+#         bad_chunks = {}
+#         bad_idx = []
+#         idx = 1
+
+#         for chunk in text_request.iter_content(chunk_size=8192):
+#             if is_valid_utf8(chunk):
+#                 stripped_chunk = strip_headers(chunk)
+#                 chunks[idx] = stripped_chunk
+#             else:
+#                 print(f"Chunk {idx} invalid")
+#                 bad_chunks[idx] = chunk
+#                 bad_idx.append(idx)
+#             idx += 1
+#         # ipdb.set_trace()
+#         if bad_chunks and len(bad_chunks) % 2 == 0:
+#             countdown = len(bad_idx)
+#             idx = 0
+#             while countdown:
+#                 bad_chunks[bad_idx[idx]] = str(
+#                     bad_chunks[bad_idx[idx]] + bad_chunks[bad_idx[idx + 1]]
+#                 )
+#                 del bad_chunks[bad_idx[idx + 1]]
+#                 countdown -= 2
+#                 idx += 2
+#             chunks = chunks | bad_chunks
+#         elif bad_chunks:
+#             raise Exception("Bad book data :(")
+
+#         for key in range(1, idx):
+#             if chunks.get(key):
+#                 file.write(chunks[key].encode("utf-8"))
+
+#     return file_path
 
 def write_text_to_book(url):
     response = requests.get(url, stream=True)
@@ -236,5 +252,3 @@ def write_text_to_book(url):
         print("Chunks irreparable. The text may contain gaps.")
     
     return ''.join(chunks)
-
-write_text_to_book("https://www.gutenberg.org/ebooks/100.txt.utf-8")
