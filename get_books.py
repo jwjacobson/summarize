@@ -111,6 +111,7 @@ def process_books(books):
     Create a dictionary of fetched books where the key is an id number and the value contains title, author, and full-text url.
     """
     book_data = {}
+    book_num = 1
     for book in books:
         title = book.get("title", "No title found.")
 
@@ -120,7 +121,8 @@ def process_books(books):
         formats = book.get("formats")
         url = url_check(formats)
 
-        book_data[book["id"]] = {"title": title, "author": author, "url": url}
+        book_data[book_num] = {"title": title, "author": author, "url": url}
+        book_num += 1
 
     return book_data
 

@@ -21,18 +21,19 @@ def default_books():
         books = process_books(fetch_default_books())
         with open(filepath,'w') as data:  
             data.write(str(books))
-    ids = {book for book in books}
-    return books, ids
+    book_nums = [book for book in books]
+    return books, book_nums
 
 @app.command()
 def default():
-    books, ids = default_books()
+    books, book_nums = default_books()
     table = Table(title="Default Books")
+    table.add_column('No.')
     table.add_column('[bold cyan]Title', max_width=75, no_wrap=False)
     table.add_column('[bold magenta]Author')
 
-    for book_id in ids:
-        table.add_row(books[book_id]['title'], books[book_id]['author'])
+    for book_num in book_nums:
+        table.add_row(str(book_num), books[book_num]['title'], books[book_num]['author'])
     print('\n')
     print(table)
     print('\n')
