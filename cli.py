@@ -31,9 +31,10 @@ def default():
     table.add_column('No.')
     table.add_column('[bold cyan]Title', max_width=75, no_wrap=False)
     table.add_column('[bold magenta]Author')
+    table.add_column('[bold yellow]Fulltext URL')
 
     for book_num in book_nums:
-        table.add_row(str(book_num), books[book_num]['title'], books[book_num]['author'])
+        table.add_row(str(book_num), books[book_num]['title'], books[book_num]['author'], f"[yellow]{books[book_num]['url']}")
     print('\n')
     print(table)
     print('\n')
