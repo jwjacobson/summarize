@@ -7,10 +7,12 @@ import ast
 
 from get_books import remove_parens, author_parse, author_check, url_check, fetch_default_books, process_books
 
+FILE_DIR = "./files/"
+
 app = typer.Typer()
 
 def default_books():
-    filepath = Path('./files/default_books.txt')
+    filepath = Path(FILE_DIR+'default_books.txt')
     if filepath.exists():
         with open(filepath, 'r') as books_txt:
             book_content = books_txt.read()
@@ -42,6 +44,11 @@ def default():
     choice = Prompt.ask("Select a book by number")
     while int(choice) < 1 or int(choice) > 32:
         choice = Prompt.ask("[red]Please choose a number between 1 and 32")
-    print(f"You have chosen [bold cyan]{books[int(choice)]['title']}[/bold cyan] by [bold magenta]{books[int(choice)]['author']}[/bold magenta].")
+    chosen_book = books[int(choice)]
+    if len(chosen_book)
+    
+    print(f"You have chosen [bold cyan]{chosen_book['title']}[/bold cyan] by [bold magenta]{chosen_book['author']}[/bold magenta].")
+    filepath = FILE_DIR+choice+chosen_book['title'].split()[0]
+    print(filepath)
 
     
