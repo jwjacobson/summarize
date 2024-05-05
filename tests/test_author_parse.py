@@ -2,7 +2,7 @@ import pytest
 from ..get_books import author_parse
 
 authors = [
-('Anonymous', 'Anonymous'), # single name
+('Aristotle', 'Aristotle'), # single name
 ('Austen, Jane', 'Jane Austen'), # first & last
 ('Stevenson, Robert Louis', 'Robert Louis Stevenson'), # first last middle
 ('Chesterton, G. K. (Gilbert Keith)', 'G. K. Chesterton'), # parenthetical
@@ -10,7 +10,7 @@ authors = [
 ('Tolkien, J. R. R. (John Ronald Reuel)', 'J. R. R. Tolkien'), # parenthetical with three initials
 ('Von Arnim, Elizabeth', 'Elizabeth Von Arnim'), # von
 ('Sanchez, Nellie Van de Grift', 'Nellie Van de Grift Sanchez'), # van
-('Martinez de la Torre, Rafael', 'Rafael Martinez de la Torre'), # de la 1
+('Martinez de la Torre, Rafael', 'Rafael Martinez de la Torre'), # de la
 ('Cervantes Saavedra, Miguel de', 'Miguel de Cervantes Saavedra'), # de
 ('Alger, Horatio, Jr.', 'Horatio Alger Jr.'), # jr
 (None, '') # none

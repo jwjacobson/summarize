@@ -78,6 +78,20 @@ def url_check(formats):
 
     return url
 
+def abbreviate_title(title):
+    res_list = []
+    colons = {':', ';'}
+    puncts = {',', ' ', '.', '—', "'"}
+
+    for char in title:
+        if char in colons:
+            break
+        elif char in puncts:
+            continue
+        else:
+            res_list.append(char.lower())
+
+    return ''.join(res_list)    
 
 def fetch_default_books():
     """
@@ -108,12 +122,14 @@ def fetch_default_books():
 
 def process_books(books):
     """
-    Create a dictionary of fetched books where the key is an id number and the value contains title, author, and full-text url.
+    Create a dictionary of fetched books where the key is an id number and the value contains title, abbreviated title, author, and full-text url.
     """
     book_data = {}
     book_num = 1
     for book in books:
         title = book.get("title", "No title found.")
+
+        short_title = abbreviate_title(title)
 
         authors = book.get("authors")
         author = author_parse(author_check(authors))
@@ -121,7 +137,7 @@ def process_books(books):
         formats = book.get("formats")
         url = url_check(formats)
 
-        book_data[book_num] = {"title": title, "author": author, "url": url}
+        book_data[book_num] = {"title": title, "short_title": short_title, "author": author, "url": url}
         book_num += 1
 
     return book_data
@@ -129,4 +145,5 @@ def process_books(books):
 if __name__ == "__main__":
     books = process_books(fetch_default_books())
     book_list = [book for book in books]
-    print(book_list)
+    for book in book_list:
+        print(books[book]['short_title'])

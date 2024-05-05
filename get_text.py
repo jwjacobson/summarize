@@ -160,81 +160,16 @@ def strip_headers(text):
 
     return str(sep.join(out), encoding="utf-8")
 
-
 def write_text_to_file(url, file_path):
     text_request = requests.get(url, stream=True)
 
     if text_request.status_code != 200:
         raise Exception("Book not found...")
 
-    with open(file_path, "wb") as file:
-        chunks = {}
-        bad_chunks = {}
-        bad_idx = []
-        idx = 1
+    text_content = text_request.content  # decode binary data to string
+    cleaned_text = strip_headers(text_content)
 
-        for chunk in text_request.iter_content(chunk_size=8192):
-            if is_valid_utf8(chunk):
-                stripped_chunk = strip_headers(chunk)
-                chunks[idx] = stripped_chunk
-            else:
-                print(f"Chunk {idx} invalid")
-                bad_chunks[idx] = chunk
-                bad_idx.append(idx)
-            idx += 1
-        # ipdb.set_trace()
-        if bad_chunks and len(bad_chunks) % 2 == 0:
-            countdown = len(bad_idx)
-            idx = 0
-            while countdown:
-                bad_chunks[bad_idx[idx]] = str(
-                    bad_chunks[bad_idx[idx]] + bad_chunks[bad_idx[idx + 1]]
-                )
-                del bad_chunks[bad_idx[idx + 1]]
-                countdown -= 2
-                idx += 2
-            chunks = chunks | bad_chunks
-        elif bad_chunks:
-            raise Exception("Bad book data :(")
-
-        for key in range(1, idx):
-            if chunks.get(key):
-                file.write(chunks[key].encode("utf-8"))
+    with open(file_path, "w", encoding='utf-8') as file:  # open file in write mode with utf-8 encoding
+        file.write(cleaned_text)
 
     return file_path
-
-def write_text_to_book(url):
-    response = requests.get(url, stream=True)
-
-    if response.status_code != 200:
-        raise Exception("Book not found...")
-
-    chunks = []
-    bad_chunks = []
-
-    for chunk in response.iter_content(chunk_size=8192):
-        stripped_chunk = strip_headers(chunk)
-        
-        # Try to combine consecutive bad chunks
-        while not is_valid_utf8(stripped_chunk) and len(bad_chunks) > 0:
-            prev_bad_chunk = bad_chunks.pop()
-            combined_chunk = str(prev_bad_chunk + stripped_chunk)
-            
-            if is_valid_utf8(combined_chunk):
-                stripped_chunk = combined_chunk
-                break
-            
-            bad_chunks.append(stripped_chunk)
-            continue
-        
-        if is_valid_utf8(stripped_chunk):
-            chunks.append(stripped_chunk)
-        else:
-            bad_chunks.append(stripped_chunk)
-
-    if len(bad_chunks) > 0:
-        print("Chunks irreparable. The text may contain gaps.")
-    
-    return ''.join(chunks)
-
-write_text_to_book("https://www.gutenberg.org/ebooks/100.txt.utf-8")
