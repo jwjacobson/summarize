@@ -79,6 +79,9 @@ def url_check(formats):
     return url
 
 def abbreviate_title(title):
+    """
+    Produces a shortened lowercase title with no spaces or punctuation, for use in filenames.
+    """
     res_list = []
     colons = {':', ';'}
     puncts = {',', ' ', '.', '—', "'"}
