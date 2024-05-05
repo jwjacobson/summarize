@@ -50,7 +50,8 @@ def default():
     print(f"You have chosen [bold cyan]{chosen_book['title']}[/bold cyan] by [bold magenta]{chosen_book['author']}[/bold magenta].")
     filepath = FILE_DIR+choice+chosen_book['short_title']+'.txt'
     print("[italic yellow]\nRetrieving book text...[/italic yellow]")
-    write_text_to_file(chosen_book['url'], filepath)
+    chosen_book['filepath'] = write_text_to_file(chosen_book['url'], filepath)
+    print(f"\nText of {chosen_book['title']} saved to {chosen_book['filepath']}.")
 
 
     
