@@ -166,10 +166,10 @@ def write_text_to_file(url, file_path):
     if text_request.status_code != 200:
         raise Exception("Book not found...")
 
-    text_content = text_request.content  # decode binary data to string
+    text_content = text_request.content
     cleaned_text = strip_headers(text_content)
 
-    with open(file_path, "w", encoding='utf-8') as file:  # open file in write mode with utf-8 encoding
+    with open(file_path, "w", encoding='utf-8') as file:
         file.write(cleaned_text)
 
     return file_path
