@@ -1,14 +1,16 @@
 import typer
 from rich import print, box
-from rich.prompt import Prompt, IntPrompt
+from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.table import Table
 from pathlib import Path
 import ast
 
 from get_books import fetch_default_books, process_books
 from get_text import write_text_to_file
+from make_summary import save_summary, print_summary
 
 FILE_DIR = "./files/"
+SUMMARY_DIR = "./files/summaries/"
 
 app = typer.Typer()
 
@@ -48,10 +50,26 @@ def default():
     chosen_book = books[int(choice)]
     
     print(f"You have chosen [bold cyan]{chosen_book['title']}[/bold cyan] by [bold magenta]{chosen_book['author']}[/bold magenta].")
-    filepath = FILE_DIR+choice+chosen_book['short_title']+'.txt'
-    print("[italic yellow]\nRetrieving book text...[/italic yellow]")
-    chosen_book['filepath'] = write_text_to_file(chosen_book['url'], filepath)
-    print(f"\nText of {chosen_book['title']} saved to {chosen_book['filepath']}.")
+    filepath = Path(FILE_DIR+choice+chosen_book['short_title']+'.txt')
 
+    if filepath.exists():
+        print(f"The book has previously been saved to {filepath}.")
+    else:
+        print("[italic yellow]\nRetrieving book text...[/italic yellow]")
+        chosen_book['filepath'] = write_text_to_file(chosen_book['url'], filepath)
+        print(f"\nText of {chosen_book['title']} saved to {chosen_book['filepath']}.")
 
-    
+    choice = Prompt.ask("\nDo you want to print or save your summary?", choices=['print', 'save'], default='save')
+    chunks = IntPrompt.ask("How many lines per chunk?", default=400)
+
+    if chunks < 50:
+        print("[red bold]Warning[/red bold]: choosing a low value could take a lot of time and resources.")
+        confirmation = Confirm.ask("Are you sure?")
+        
+    if choice == 'print':
+        print_summary(filepath, chunks)
+    else:
+        target_filepath = Path(SUMMARY_DIR+chosen_book['short_title']+f'_{chunks}_sum.txt')
+        save_summary(filepath, target_filepath, chunks)
+        print(f'\nSummary saved to {target_filepath}.')
+
