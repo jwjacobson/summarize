@@ -84,7 +84,7 @@ def abbreviate_title(title):
     """
     res_list = []
     colons = {':', ';'}
-    puncts = {',', ' ', '.', '—', "'"}
+    puncts = {',', ' ', '.', '—', '-', "'", '"'}
 
     for char in title:
         if char in colons:
@@ -130,9 +130,12 @@ def process_books(books):
     book_data = {}
     book_num = 1
     for book in books:
-        title = book.get("title", "No title found.")
+        title = book.get("title", None)
 
-        short_title = abbreviate_title(title)
+        if title:
+            short_title = abbreviate_title(title)
+        else:
+            short_title = None
 
         authors = book.get("authors")
         author = author_parse(author_check(authors))

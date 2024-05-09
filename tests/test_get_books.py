@@ -1,7 +1,6 @@
 import pytest
 import requests
 
-
 from ..get_books import fetch_default_books, process_books, author_check, url_check
 
 def test_gutendex_api():
@@ -77,14 +76,15 @@ book_data = [
     # Normal data
     (
         {
-            'id': 123,
+            'id': 1,
             'title': 'Sample Book',
             'authors': [{'name': 'Doe, John'}],
             'formats': {'text/plain; charset=us-ascii': 'http://example.com'}
         },
         {
-            123: {
+            1: {
                 'title': 'Sample Book',
+                'short_title': 'samplebook',
                 'author': 'John Doe',
                 'url': 'http://example.com'
             }
@@ -93,13 +93,14 @@ book_data = [
     # No title
     (
         {
-            'id': 123,
+            'id': 1,
             'authors': [{'name': 'Doe, John'}],
             'formats': {'text/plain; charset=us-ascii': 'http://example.com'}
         },
         {
-            123: {
-                'title': 'No title found.',
+            1: {
+                'title': None,
+                'short_title': None,
                 'author': 'John Doe',
                 'url': 'http://example.com'
             }
@@ -108,13 +109,14 @@ book_data = [
     # No author
     (
         {
-            'id': 123,
+            'id': 1,
             'title': 'Sample Book',
             'formats': {'text/plain; charset=us-ascii': 'http://example.com'}
         },
         {
-            123: {
+            1: {
                 'title': 'Sample Book',
+                'short_title': 'samplebook',
                 'author': 'No author found.',
                 'url': 'http://example.com'
             }
@@ -123,13 +125,14 @@ book_data = [
     # No formats
     (
         {
-            'id': 123,
+            'id': 1,
             'title': 'Sample Book',
             'authors': [{'name': 'Doe, John'}]
         },
         {
-            123: {
+            1: {
                 'title': 'Sample Book',
+                'short_title': 'samplebook',
                 'author': 'John Doe',
                 'url': 'No URLs found.'
             }
@@ -138,12 +141,13 @@ book_data = [
     # No title or author
     (
         {
-            'id': 123,
+            'id': 1,
             'formats': {'text/plain; charset=us-ascii': 'http://example.com'}
         },
         {
-            123: {
-                'title': 'No title found.',
+            1: {
+                'title': None,
+                'short_title': None,
                 'author': 'No author found.',
                 'url': 'http://example.com'
             }
@@ -152,12 +156,13 @@ book_data = [
     # no title or formats
     (
         {
-            'id': 123,
+            'id': 1,
             'authors': [{'name': 'Doe, John'}],
         },
         {
-            123: {
-                'title': 'No title found.',
+            1: {
+                'title': None,
+                'short_title': None,
                 'author': 'John Doe',
                 'url': 'No URLs found.'
             }
@@ -166,12 +171,13 @@ book_data = [
     # no author or formats
     (
         {
-            'id': 123,
+            'id': 1,
             'title': 'Sample Book',
         },
         {
-            123: {
+            1: {
                 'title': 'Sample Book',
+                'short_title': 'samplebook',
                 'author': 'No author found.',
                 'url': 'No URLs found.'
             }
@@ -180,11 +186,12 @@ book_data = [
     # no title author or formats
     (
         {
-            'id': 123,
+            'id': 1,
         },
         {
-            123: {
-                'title': 'No title found.',
+            1: {
+                'title': None,
+                'short_title': None,
                 'author': 'No author found.',
                 'url': 'No URLs found.'
             }
