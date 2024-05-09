@@ -84,7 +84,7 @@ def abbreviate_title(title):
     """
     res_list = []
     colons = {':', ';'}
-    puncts = {',', ' ', '.', '—', "'"}
+    puncts = {',', ' ', '.', '—', '-', "'", '"'}
 
     for char in title:
         if char in colons:

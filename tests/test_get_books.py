@@ -1,7 +1,6 @@
 import pytest
 import requests
 
-
 from ..get_books import fetch_default_books, process_books, author_check, url_check
 
 def test_gutendex_api():
