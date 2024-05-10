@@ -13,28 +13,21 @@ from make_summary import save_summary, print_summary
 FILE_DIR = "./files/"
 SUMMARY_DIR = "./files/summaries/"
 
-@dataclass
-class Book:
-    id: int
-    title: str
-    short_title: str = None
-    author: str
-    url: str
-    filepath: Path
+
 
 app = typer.Typer()
 
 def default_books():
-    filepath = Path(FILE_DIR+'default_books.txt')
-    if filepath.exists():
-        with open(filepath, 'r') as books_txt:
+    default_books_filepath = Path(FILE_DIR+'default_books.txt')
+    if default_books_filepath.exists():
+        with open(default_books_filepath, 'r') as books_txt:
             book_content = books_txt.read()
         books = ast.literal_eval(book_content)
     else:
         print("[italic yellow]Retrieving default book data...[/italic yellow]")
 
         books = process_books(fetch_default_books())
-        with open(filepath,'w') as data:  
+        with open(default_books_filepath,'w') as data:  
             data.write(str(books))
     book_nums = [book for book in books]
     return books, book_nums

@@ -13,3 +13,4 @@ pre-commit
 typer
 pytest-cov
 pytest-mock
+tinydb
