@@ -4,6 +4,7 @@ from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.table import Table
 from pathlib import Path
 import ast
+from dataclasses import dataclass
 
 from get_books import fetch_default_books, process_books
 from get_text import write_text_to_file
@@ -11,6 +12,15 @@ from make_summary import save_summary, print_summary
 
 FILE_DIR = "./files/"
 SUMMARY_DIR = "./files/summaries/"
+
+@dataclass
+class Book:
+    id: int
+    title: str
+    short_title: str = None
+    author: str
+    url: str
+    filepath: Path
 
 app = typer.Typer()
 
