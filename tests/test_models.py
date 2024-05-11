@@ -8,8 +8,8 @@ def book_fixture():
     """
     book = Book(
         id=1,
-        title="yesterday's tomorrow",
-        short_title="yesterdaystomorrow",
+        title="Yesterday's Tomorrows",
+        short_title="yesterdaystomorrows",
         author="Wilfred Sinecure",
         url="https://www.gutenberg.org/",
         filepath=None
@@ -20,9 +20,10 @@ def book_fixture():
 def test_book_field_access(book_fixture):
     book = book_fixture
 
-    assert book.title == "yesterday's tomorrow"
-    assert book.short_title == "yesterdaystomorrow"
-    assert book.title == "yesterday's tomorrow"
+    assert book.id == 1
+    assert book.title == "Yesterday's Tomorrows"
+    assert book.short_title == "yesterdaystomorrows"
+    assert book.author == "Wilfred Sinecure"
     assert book.url == "https://www.gutenberg.org/"
     assert book.filepath is None
 
@@ -34,3 +35,17 @@ def test_book_defaults():
     assert book.title is None
     assert book.url is None
     assert book.filepath is None
+
+def test_from_dict(book_fixture):
+    book1 = book_fixture
+    book2_dict = {
+        "id": 1,
+        "title": "Yesterday's Tomorrows",
+        "short_title": "yesterdaystomorrows",
+        "author": "Wilfred Sinecure",
+        "url": "https://www.gutenberg.org/",
+        "filepath": None
+    }
+    book2 = Book.from_dict(book2_dict)
+
+    assert book1 == book2
