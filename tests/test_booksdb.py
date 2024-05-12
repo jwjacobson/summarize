@@ -45,5 +45,16 @@ def test_get_book(books_db, book_fixture):
     book = book_fixture
     books_db.add_book(book)
     gotten_book = books_db.get_book(1)
-    
+
     assert book == gotten_book
+
+def test_list_books(books_db):
+    books_db.add_book(Book(id=1))
+    books_db.add_book(Book(id=2))
+    books_db.add_book(Book(id=3))
+    listed_books = books_db.list_books()
+    expected_ids = {1, 2, 3}
+    
+    assert len(listed_books) == 3
+    for book in listed_books:
+        assert book.id in expected_ids
