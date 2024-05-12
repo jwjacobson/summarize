@@ -1,6 +1,7 @@
 import pytest
 from pathlib import Path
 from tempfile import TemporaryDirectory
+import ipdb
 
 from ..api import Book, BooksDB
 
@@ -40,3 +41,9 @@ def test_delete_all(books_db):
 
     assert books_db.count() == 0
 
+def test_get_book(books_db, book_fixture):
+    book = book_fixture
+    books_db.add_book(book)
+    gotten_book = books_db.get_book(1)
+    
+    assert book == gotten_book
