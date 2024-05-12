@@ -2,8 +2,11 @@ import typer
 from rich import print, box
 from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.table import Table
+import pathlib
 from pathlib import Path
 import ast
+from contextlib import contextmanager
+from dataclasses import dataclass
 
 from get_books import fetch_default_books, process_books
 from get_text import write_text_to_file
@@ -12,19 +15,21 @@ from make_summary import save_summary, print_summary
 FILE_DIR = "./files/"
 SUMMARY_DIR = "./files/summaries/"
 
+
+
 app = typer.Typer()
 
 def default_books():
-    filepath = Path(FILE_DIR+'default_books.txt')
-    if filepath.exists():
-        with open(filepath, 'r') as books_txt:
+    default_books_filepath = Path(FILE_DIR+'default_books.txt')
+    if default_books_filepath.exists():
+        with open(default_books_filepath, 'r') as books_txt:
             book_content = books_txt.read()
         books = ast.literal_eval(book_content)
     else:
         print("[italic yellow]Retrieving default book data...[/italic yellow]")
 
         books = process_books(fetch_default_books())
-        with open(filepath,'w') as data:  
+        with open(default_books_filepath,'w') as data:  
             data.write(str(books))
     book_nums = [book for book in books]
     return books, book_nums
@@ -72,4 +77,12 @@ def default():
         target_filepath = Path(SUMMARY_DIR+chosen_book['short_title']+f'_{chunks}_sum.txt')
         save_summary(filepath, target_filepath, chunks)
         print(f'\nSummary saved to {target_filepath}.')
+
+@contextmanager
+def books_db():
+    db_path = get_path()
+    db = books.BooksDB(db_path)
+    yield db
+    db.close()
+
 
