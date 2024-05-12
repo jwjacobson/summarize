@@ -4,6 +4,7 @@ from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.table import Table
 from pathlib import Path
 import ast
+from contextlib import contextmanager
 from dataclasses import dataclass
 
 from get_books import fetch_default_books, process_books
@@ -75,4 +76,12 @@ def default():
         target_filepath = Path(SUMMARY_DIR+chosen_book['short_title']+f'_{chunks}_sum.txt')
         save_summary(filepath, target_filepath, chunks)
         print(f'\nSummary saved to {target_filepath}.')
+
+@contextmanager
+def books_db():
+    db_path = get_path()
+    db = books.BooksDB(db_path)
+    yield db
+    db.close()
+
 
