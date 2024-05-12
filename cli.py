@@ -2,6 +2,7 @@ import typer
 from rich import print, box
 from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.table import Table
+import pathlib
 from pathlib import Path
 import ast
 from contextlib import contextmanager
