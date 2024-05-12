@@ -17,4 +17,26 @@ def test_empty_db(books_db):
 
 def test_add_one_book(books_db):
     books_db.add_book(Book())
+
     assert books_db.count() == 1
+
+def test_add_two_books(books_db):
+    books_db.add_book(Book())
+    books_db.add_book(Book())
+
+    assert books_db.count() == 2
+
+def test_delete_book(books_db):
+    books_db.add_book(Book(id=1))
+    books_db.add_book(Book(id=2))
+    books_db.delete_book(2)
+
+    assert books_db.count() == 1
+
+def test_delete_all(books_db):
+    books_db.add_book(Book(id=1))
+    books_db.add_book(Book(id=2))
+    books_db.delete_all()
+
+    assert books_db.count() == 0
+
