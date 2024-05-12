@@ -2,7 +2,7 @@ import pytest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from ..api import BooksDB
+from ..api import Book, BooksDB
 
 @pytest.fixture()
 def books_db():
@@ -14,3 +14,7 @@ def books_db():
 
 def test_empty_db(books_db):
     assert books_db.count() == 0
+
+def test_add_one_book(books_db):
+    books_db.add_book(Book())
+    assert books_db.count() == 1
