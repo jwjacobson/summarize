@@ -54,7 +54,31 @@ def test_list_books(books_db):
     books_db.add_book(Book(id=3))
     listed_books = books_db.list_books()
     expected_ids = {1, 2, 3}
-    
+
     assert len(listed_books) == 3
     for book in listed_books:
         assert book.id in expected_ids
+
+def test_update_book(books_db, book_fixture):
+    book = book_fixture
+    books_db.add_book(book)
+    new_data = {
+        "title": "Tomorrow's Yesterdays",
+        "short_title": "tomorrowsyesterdays",
+        "author": "Clifton Semaphore",
+        "url": "https://www.csemaphore.com/2"
+    }
+
+    new_book = Book.from_dict(new_data)
+    books_db.update_book(book.id, new_book)
+    updated_book_data = books_db.get_book(book.id).to_dict()
+
+    assert updated_book_data['id'] == book.id
+    assert updated_book_data['title'] == new_data['title']
+    assert updated_book_data['short_title'] == new_data['short_title']
+    assert updated_book_data['author'] == new_data['author']
+    assert updated_book_data['url'] == new_data['url']
+
+
+
+
