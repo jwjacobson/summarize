@@ -1,5 +1,10 @@
 import pytest
-from ..api import Book
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent / "src"))
+
+from summarize.api import Book
 
 @pytest.fixture()
 def book_fixture():
