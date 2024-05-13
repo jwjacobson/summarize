@@ -1,5 +1,5 @@
 import pytest
-from ..get_books import abbreviate_title
+from summarize.get_books import abbreviate_title
 
 titles = [
     ('Dracula', 'dracula'), # one word

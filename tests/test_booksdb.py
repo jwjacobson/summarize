@@ -3,7 +3,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import ipdb
 
-from ..api import Book, BooksDB
+from summarize.api import Book, BooksDB
 
 @pytest.fixture()
 def books_db():

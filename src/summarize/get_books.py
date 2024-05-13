@@ -5,7 +5,7 @@ Author names are converted to First Middle Last format.
 """
 
 import requests
-from api import Book
+from .api import Book
 import ipdb
 
 

@@ -1,5 +1,5 @@
 import pytest
-from ..get_books import author_parse
+from summarize.get_books import author_parse
 
 authors = [
 ('Aristotle', 'Aristotle'), # single name

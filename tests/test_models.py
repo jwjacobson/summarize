@@ -1,4 +1,4 @@
-from ..api import Book
+from summarize.api import Book
 
 def test_book_field_access(book_fixture):
     book = book_fixture

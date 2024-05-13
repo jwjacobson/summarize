@@ -13,6 +13,8 @@ from get_text import write_text_to_file
 from make_summary import save_summary, print_summary
 from api import Book, BooksDB
 
+import ipdb
+
 FILE_DIR = "./files/"
 SUMMARY_DIR = "./files/summaries/"
 
@@ -30,6 +32,18 @@ def default_books():
         books = process_books(fetch_default_books())
         with open(default_books_filepath,'w') as data:  
             data.write(str(books))
+    book_nums = [book for book in books]
+    return books, book_nums
+
+def get_default_books():
+    print("[italic yellow]Retrieving default book data...[/italic yellow]")
+    books = process_books(fetch_default_books())
+    for book in books:
+        with books_db() as db:
+            db.add_book(Book.from_dict(books[book]))
+        
+    ipdb.set_trace()
+
     book_nums = [book for book in books]
     return books, book_nums
 
@@ -82,14 +96,16 @@ def get_path():
     if db_path_env:
         db_path = pathlib.Path(db_path_env)
     else:
-        db_path = pathlib.Path.(__file__).parent / "books_db"
+        db_path = pathlib.Path(__file__).parent / "books_db"
     return db_path
 
 @contextmanager
 def books_db():
     db_path = get_path()
     db = BooksDB(db_path)
-    yield db
-    db.close()
+    try:
+        yield db
+    finally:
+        db.close()
 
 

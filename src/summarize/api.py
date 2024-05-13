@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from dataclasses import asdict
 from dataclasses import field
 
-from db import DB
+from .db import DB
 
 @dataclass
 class Book:
