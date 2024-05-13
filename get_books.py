@@ -1,10 +1,12 @@
 """
 This module contains functions for fetching the first page of English-language results from the Gutendex API and creating a dictionary for each book,
-in which the key is the book's ID and the value is a dictionary containing title, author, and a download link.
+in which the key is an integer representing the book's order in printed results and the value is a dictionary containing relevant book information.
 Author names are converted to First Middle Last format.
 """
 
 import requests
+from api import Book
+import ipdb
 
 
 def remove_parens(author):
@@ -22,9 +24,6 @@ def author_parse(author):
     """
     Take the author information which is stored in Last, First Middle format and convert it to First Middle Last.
     For now it only handles the first author, so second authors of multiauthor books are out of luck.
-    Examples:
-    'Shelley, Mary Wollstonecraft' -> 'Mary Wollstonecraft Shelley'
-    'Von Arnim, Elizbeth' -> 'Elizbeth Von Arnim'
     """
     if not author:
         return ""
@@ -125,7 +124,7 @@ def fetch_default_books():
 
 def process_books(books):
     """
-    Create a dictionary of fetched books where the key is an id number and the value contains title, abbreviated title, author, and full-text url.
+    Create a dictionary of fetched books where the key is a sequential number and the value is a dictionary of book info.
     """
     book_data = {}
     book_num = 1
@@ -144,6 +143,7 @@ def process_books(books):
         url = url_check(formats)
 
         book_data[book_num] = {"title": title, "short_title": short_title, "author": author, "url": url}
+
         book_num += 1
 
     return book_data

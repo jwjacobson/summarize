@@ -1,3 +1,4 @@
+import os
 import typer
 from rich import print, box
 from rich.prompt import Prompt, IntPrompt, Confirm
@@ -6,16 +7,14 @@ import pathlib
 from pathlib import Path
 import ast
 from contextlib import contextmanager
-from dataclasses import dataclass
 
 from get_books import fetch_default_books, process_books
 from get_text import write_text_to_file
 from make_summary import save_summary, print_summary
+from api import Book, BooksDB
 
 FILE_DIR = "./files/"
 SUMMARY_DIR = "./files/summaries/"
-
-
 
 app = typer.Typer()
 
@@ -78,10 +77,18 @@ def default():
         save_summary(filepath, target_filepath, chunks)
         print(f'\nSummary saved to {target_filepath}.')
 
+def get_path():
+    db_path_env = os.getenv("BOOKS_DB_DIR", "")
+    if db_path_env:
+        db_path = pathlib.Path(db_path_env)
+    else:
+        db_path = pathlib.Path.(__file__).parent / "books_db"
+    return db_path
+
 @contextmanager
 def books_db():
     db_path = get_path()
-    db = books.BooksDB(db_path)
+    db = BooksDB(db_path)
     yield db
     db.close()
 

@@ -1,16 +1,8 @@
-# import typer
-# from rich import print, box
-# from rich.prompt import Prompt, IntPrompt, Confirm
-# from rich.table import Table
 from pathlib import Path
-import ast
+# import ast
 from dataclasses import dataclass
 from dataclasses import asdict
 from dataclasses import field
-
-# from get_books import fetch_default_books, process_books
-# from get_text import write_text_to_file
-# from make_summary import save_summary, print_summary
 
 from db import DB
 
