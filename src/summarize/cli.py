@@ -8,10 +8,10 @@ from pathlib import Path
 import ast
 from contextlib import contextmanager
 
-from get_books import fetch_default_books, process_books
-from get_text import write_text_to_file
-from make_summary import save_summary, print_summary
-from api import Book, BooksDB
+from summarize.get_books import fetch_default_books, process_books
+from summarize.get_text import write_text_to_file
+from summarize.make_summary import save_summary, print_summary
+from summarize.api import Book, BooksDB
 
 import ipdb
 

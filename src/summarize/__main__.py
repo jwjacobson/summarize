@@ -1,3 +1,3 @@
-from cli import app
+from summarize.cli import app
 
 app()
