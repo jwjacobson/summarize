@@ -3,14 +3,12 @@ import typer
 from rich import print, box
 from rich.prompt import Prompt, IntPrompt, Confirm
 from rich.table import Table
-import pathlib
 from pathlib import Path
-import ast
 from contextlib import contextmanager
 
 from summarize.get_books import fetch_default_books, process_books
 from summarize.get_text import write_text_to_file
-# from summarize.make_summary import save_summary, print_summary
+from summarize.make_summary import save_summary, print_summary
 from summarize.api import Book, BooksDB
 
 import ipdb
@@ -20,28 +18,11 @@ SUMMARY_DIR = FILE_DIR / "summaries"
 
 app = typer.Typer()
 
-# def default_books():
-#     default_books_filepath = Path(FILE_DIR+'default_books.txt')
-#     if default_books_filepath.exists():
-#         with open(default_books_filepath, 'r') as books_txt:
-#             book_content = books_txt.read()
-#         books = ast.literal_eval(book_content)
-#     else:
-#         print("[italic yellow]Retrieving default book data...[/italic yellow]")
-
-#         books = process_books(fetch_default_books())
-#         with open(default_books_filepath,'w') as data:  
-#             data.write(str(books))
-#     book_nums = [book for book in books]
-#     return books, book_nums
-
 def create_filepath(book_dict):
-    return FILE_DIR / f'{book_dict['short_title']}.txt'
+    return f'{book_dict['short_title']}.txt'
 
 def get_default_books():
     print("\n[italic yellow]Retrieving default book data...")
-    # with books_db() as db:
-        # db.delete_all()
     books = process_books(fetch_default_books())
     for book in books:
         book_dict = books[book]
@@ -75,8 +56,8 @@ def default():
 
     selected_book = books[int(choice) - 1]
     
-    print(f"You have chosen [bold cyan]{selected_book.title}[/bold cyan] by [bold magenta]{selected_book.author}[/bold magenta].")
-    filepath = Path(selected_book.filepath)
+    print(f"\nYou have chosen [bold cyan]{selected_book.title}[/bold cyan] by [bold magenta]{selected_book.author}[/bold magenta].")
+    filepath = FILE_DIR / Path(selected_book.filepath)
 
     if filepath.exists():
         print(f"The book has previously been saved to {filepath}.")
@@ -85,30 +66,30 @@ def default():
         write_text_to_file(selected_book.url, filepath)
         print(f"\nText of {selected_book.title} saved to {filepath}.")
 
+    choice = Prompt.ask("\nDo you want to print or save your summary?", choices=['print', 'save'], default='save')
+    chunks = IntPrompt.ask("How many lines per chunk?", default=400)
+
+    if chunks < 50:
+        print("[red bold]Warning[/red bold]: choosing a low value could take a lot of time and resources.")
+        confirmation = Confirm.ask("Are you sure?")
+        
+    if choice == 'print':
+        print_summary(filepath, chunks)
+    else:
+        target_filepath = SUMMARY_DIR / Path(selected_book.filepath)
+
+        save_summary(filepath, target_filepath, chunks)
+        print(f'\nSummary saved to {target_filepath}.')
+
     with books_db() as db:
         db.delete_all()
-
-
-    # choice = Prompt.ask("\nDo you want to print or save your summary?", choices=['print', 'save'], default='save')
-    # chunks = IntPrompt.ask("How many lines per chunk?", default=400)
-
-    # if chunks < 50:
-    #     print("[red bold]Warning[/red bold]: choosing a low value could take a lot of time and resources.")
-    #     confirmation = Confirm.ask("Are you sure?")
-        
-    # if choice == 'print':
-    #     print_summary(filepath, chunks)
-    # else:
-    #     target_filepath = Path(SUMMARY_DIR+chosen_book['short_title']+f'_{chunks}_sum.txt')
-    #     save_summary(filepath, target_filepath, chunks)
-    #     print(f'\nSummary saved to {target_filepath}.')
 
 def get_path():
     db_path_env = os.getenv("BOOKS_DB_DIR", "")
     if db_path_env:
-        db_path = pathlib.Path(db_path_env)
+        db_path = Path(db_path_env)
     else:
-        db_path = pathlib.Path(__file__).parent / "books_db"
+        db_path = Path(__file__).parent / "books_db"
     return db_path
 
 @contextmanager
