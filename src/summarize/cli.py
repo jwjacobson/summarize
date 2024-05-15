@@ -76,16 +76,18 @@ def default():
     selected_book = books[int(choice) - 1]
     
     print(f"You have chosen [bold cyan]{selected_book.title}[/bold cyan] by [bold magenta]{selected_book.author}[/bold magenta].")
-    # filepath = Path(FILE_DIR+choice+chosen_book['short_title']+'.txt')
+    filepath = Path(selected_book.filepath)
+
+    if filepath.exists():
+        print(f"The book has previously been saved to {filepath}.")
+    else:
+        print("[italic yellow]\nRetrieving book text...[/italic yellow]")
+        write_text_to_file(selected_book.url, filepath)
+        print(f"\nText of {selected_book.title} saved to {filepath}.")
 
     with books_db() as db:
         db.delete_all()
-    # if filepath.exists():
-    #     print(f"The book has previously been saved to {filepath}.")
-    # else:
-    #     print("[italic yellow]\nRetrieving book text...[/italic yellow]")
-    #     chosen_book['filepath'] = write_text_to_file(chosen_book['url'], filepath)
-    #     print(f"\nText of {chosen_book['title']} saved to {chosen_book['filepath']}.")
+
 
     # choice = Prompt.ask("\nDo you want to print or save your summary?", choices=['print', 'save'], default='save')
     # chunks = IntPrompt.ask("How many lines per chunk?", default=400)
