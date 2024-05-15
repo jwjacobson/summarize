@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from dataclasses import asdict
 from dataclasses import field
 
-from .db import DB
+from summarize.db import DB
 
 @dataclass
 class Book:
@@ -13,7 +13,7 @@ class Book:
     short_title: str = None
     author: str = None
     url: str = None
-    filepath: Path = None
+    filepath: str = None
 
     @classmethod
     def from_dict(cls, d):
