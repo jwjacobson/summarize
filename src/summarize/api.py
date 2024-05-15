@@ -13,7 +13,7 @@ class Book:
     short_title: str = None
     author: str = None
     url: str = None
-    filepath: Path = None
+    filepath: str = None
 
     @classmethod
     def from_dict(cls, d):

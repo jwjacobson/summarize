@@ -15,8 +15,8 @@ from summarize.api import Book, BooksDB
 
 import ipdb
 
-FILE_DIR = "./files/"
-SUMMARY_DIR = "./files/summaries/"
+FILE_DIR = Path("./files/")
+SUMMARY_DIR = FILE_DIR / "summaries"
 
 app = typer.Typer()
 
@@ -35,16 +35,20 @@ app = typer.Typer()
 #     book_nums = [book for book in books]
 #     return books, book_nums
 
+def create_filepath(book_dict):
+    return FILE_DIR / f'{book_dict['short_title']}.txt'
+
 def get_default_books():
-    print("[italic yellow]Retrieving default book data...[/italic yellow]")
+    print("\n[italic yellow]Retrieving default book data...")
+    # with books_db() as db:
+        # db.delete_all()
     books = process_books(fetch_default_books())
     for book in books:
+        book_dict = books[book]
+        book_dict['filepath'] = str(create_filepath(book_dict))
         with books_db() as db:
             db.add_book(Book.from_dict(books[book]))
     
-    # book_nums = [book for book in books]
-    # return book_nums
-
 @app.command()
 def default():
     get_default_books()
@@ -56,25 +60,26 @@ def default():
     table.add_column('[bold yellow]Fulltext URL')
 
     with books_db() as db:
-        order_num = 1
-        for book in db.list_books():
+        books = db.list_books()
+        for order_num, book in enumerate(books, start=1):
             table.add_row(f'{str(order_num)}.', book.title, book.author, f"[yellow]{book.url}")
             order_num += 1
     print('\n')
     print(table)
     print('\n')
 
-    with books_db() as db:
-        db.delete_all()
+    max_choice = len(books)
+    choice = Prompt.ask("Select a book by number")
+    while not choice.isdigit() or int(choice) < 1 or int(choice) > max_choice:
+        choice = Prompt.ask("[red]Please choose a number between 1 and 32")
 
-    # choice = Prompt.ask("Select a book by number")
-    # while int(choice) < 1 or int(choice) > 32:
-    #     choice = Prompt.ask("[red]Please choose a number between 1 and 32")
-    # chosen_book = books[int(choice)]
+    selected_book = books[int(choice) - 1]
     
-    # print(f"You have chosen [bold cyan]{chosen_book['title']}[/bold cyan] by [bold magenta]{chosen_book['author']}[/bold magenta].")
+    print(f"You have chosen [bold cyan]{selected_book.title}[/bold cyan] by [bold magenta]{selected_book.author}[/bold magenta].")
     # filepath = Path(FILE_DIR+choice+chosen_book['short_title']+'.txt')
 
+    with books_db() as db:
+        db.delete_all()
     # if filepath.exists():
     #     print(f"The book has previously been saved to {filepath}.")
     # else:
