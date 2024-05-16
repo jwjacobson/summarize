@@ -18,15 +18,10 @@ SUMMARY_DIR = FILE_DIR / "summaries"
 
 app = typer.Typer()
 
-def create_filepath(book_dict):
-    return f'{book_dict['short_title']}.txt'
-
 def get_default_books():
     print("\n[italic yellow]Retrieving default book data...")
     books = process_books(fetch_default_books())
     for book in books:
-        book_dict = books[book]
-        book_dict['filepath'] = str(create_filepath(book_dict))
         with books_db() as db:
             db.add_book(Book.from_dict(books[book]))
     

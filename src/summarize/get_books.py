@@ -133,6 +133,7 @@ def process_books(books):
 
         if title:
             short_title = abbreviate_title(title)
+            filepath = f'{short_title}.txt'
         else:
             short_title = None
 
@@ -142,7 +143,7 @@ def process_books(books):
         formats = book.get("formats")
         url = url_check(formats)
 
-        book_data[book_num] = {"title": title, "short_title": short_title, "author": author, "url": url}
+        book_data[book_num] = {"title": title, "short_title": short_title, "author": author, "url": url, "filepath": filepath}
 
         book_num += 1
 
