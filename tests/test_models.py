@@ -5,29 +5,26 @@ def test_book_field_access(book_fixture):
 
     assert book.id == 1
     assert book.title == "Yesterday's Tomorrows"
-    assert book.short_title == "yesterdaystomorrows"
     assert book.author == "Wilfred Sinecure"
     assert book.url == "https://www.gutenberg.org/"
-    assert book.filepath is None
+    assert book.filename == "yesterdaystomorrows.txt"
 
 def test_book_defaults():
     book = Book()
 
     assert book.title is None
-    assert book.short_title is None
-    assert book.title is None
+    assert book.author is None
     assert book.url is None
-    assert book.filepath is None
+    assert book.filename is None
 
 def test_from_dict(book_fixture):
     book1 = book_fixture
     book2_dict = {
         "id": 1,
         "title": "Yesterday's Tomorrows",
-        "short_title": "yesterdaystomorrows",
         "author": "Wilfred Sinecure",
         "url": "https://www.gutenberg.org/",
-        "filepath": None
+        "filename": "yesterdaystomorrows.txt",
     }
     book2 = Book.from_dict(book2_dict)
 
@@ -39,10 +36,9 @@ def test_to_dict(book_fixture):
     expected =  {
         "id": 1,
         "title": "Yesterday's Tomorrows",
-        "short_title": "yesterdaystomorrows",
         "author": "Wilfred Sinecure",
         "url": "https://www.gutenberg.org/",
-        "filepath": None
+        "filename": "yesterdaystomorrows.txt",
     }
 
     assert book_dict == expected

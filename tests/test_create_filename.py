@@ -13,4 +13,4 @@ titles = [
 
 @pytest.mark.parametrize('input, expected', titles)
 def test_create_filename(input, expected):
-    assert create_filename(input) == expected, f'Expected {expected}, but got {abbreviate_title(input)}'
+    assert create_filename(input) == expected, f'Expected {expected}, but got {create_filename(input)}'
