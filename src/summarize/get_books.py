@@ -77,9 +77,9 @@ def url_check(formats):
 
     return url
 
-def abbreviate_title(title):
+def create_filename(title):
     """
-    Produces a shortened lowercase title with no spaces or punctuation, for use in filenames.
+    Creates a filename for the book from a shortened version of its title.
     """
     res_list = []
     colons = {':', ';'}
@@ -92,6 +92,8 @@ def abbreviate_title(title):
             continue
         else:
             res_list.append(char.lower())
+    
+    res_list.append('.txt')
 
     return ''.join(res_list)    
 
@@ -123,7 +125,7 @@ def fetch_default_books():
 
 
 def process_books(books):
-    """
+    """ 
     Create a dictionary of fetched books where the key is a sequential number and the value is a dictionary of book info.
     """
     book_data = {}
@@ -132,10 +134,9 @@ def process_books(books):
         title = book.get("title", None)
 
         if title:
-            short_title = abbreviate_title(title)
-            filepath = f'{short_title}.txt'
+            filename = create_filename(title)
         else:
-            short_title = None
+            filename = None
 
         authors = book.get("authors")
         author = author_parse(author_check(authors))
@@ -143,7 +144,7 @@ def process_books(books):
         formats = book.get("formats")
         url = url_check(formats)
 
-        book_data[book_num] = {"title": title, "short_title": short_title, "author": author, "url": url, "filepath": filepath}
+        book_data[book_num] = {"title": title, "author": author, "url": url, "filename": filename}
 
         book_num += 1
 
@@ -153,4 +154,4 @@ if __name__ == "__main__":
     books = process_books(fetch_default_books())
     book_list = [book for book in books]
     for book in book_list:
-        print(books[book]['short_title'])
+        print(books[book]['filename'])

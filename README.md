@@ -20,5 +20,7 @@ At present the app retrieves the top 32 books from Project Gutenberg and offers 
 ### A note on chunks
 Summarize works by breaking the source text into chunks of a given number of lines; you can specify how many lines per chunk the program works on. In theory the LLM should work with very large chunks, but experience has shown that a range of 200-800 works best. Please note that the smaller the chunk size, the longer the program will take to run!
 
+### Sample output
+
 ### License
 Summarize is [free software](https://www.fsf.org/about/what-is-free-software), released under version 3.0 of the GPL. Everyone has the right to use, modify, and distribute Summarize subject to the [stipulations](https://github.com/jwjacobson/summarize/blob/main/LICENSE) of that license.

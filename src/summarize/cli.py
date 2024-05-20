@@ -18,15 +18,24 @@ SUMMARY_DIR = FILE_DIR / "summaries"
 
 app = typer.Typer()
 
+
+
 def get_default_books():
     print("\n[italic yellow]Retrieving default book data...")
     books = process_books(fetch_default_books())
+    book_nums = []
     for book in books:
         with books_db() as db:
             db.add_book(Book.from_dict(books[book]))
+        # book_nums.append(book)
+    # return book_nums
     
 @app.command()
 def default():
+    # with books_db() as db:
+        # db.delete_all()
+    
+    # book_nums = get_default_books()
     get_default_books()
 
     table = Table(box=box.SQUARE_DOUBLE_HEAD, border_style="magenta")
