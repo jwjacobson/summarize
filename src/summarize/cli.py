@@ -32,9 +32,11 @@ def get_default_books():
     
 @app.command()
 def default():
-    # with books_db() as db:
-        # db.delete_all()
-    
+    with books_db() as db:
+        book_count = db.count()
+        if book_count:
+            db.delete_all()
+
     # book_nums = get_default_books()
     get_default_books()
 
