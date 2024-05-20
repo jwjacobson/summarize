@@ -84,9 +84,9 @@ book_data = [
         {
             1: {
                 'title': 'Sample Book',
-                'short_title': 'samplebook',
                 'author': 'John Doe',
-                'url': 'http://example.com'
+                'url': 'http://example.com',
+                'filename': 'samplebook.txt',
             }
         }
     ),
@@ -100,9 +100,9 @@ book_data = [
         {
             1: {
                 'title': None,
-                'short_title': None,
                 'author': 'John Doe',
-                'url': 'http://example.com'
+                'url': 'http://example.com',
+                'filename': None,
             }
         }
     ),
@@ -116,9 +116,9 @@ book_data = [
         {
             1: {
                 'title': 'Sample Book',
-                'short_title': 'samplebook',
                 'author': 'No author found.',
-                'url': 'http://example.com'
+                'url': 'http://example.com',
+                'filename': 'samplebook.txt',
             }
         }
     ),
@@ -132,9 +132,9 @@ book_data = [
         {
             1: {
                 'title': 'Sample Book',
-                'short_title': 'samplebook',
                 'author': 'John Doe',
-                'url': 'No URLs found.'
+                'url': 'No URLs found.',
+                'filename': 'samplebook.txt',
             }
         }
     ),
@@ -147,9 +147,9 @@ book_data = [
         {
             1: {
                 'title': None,
-                'short_title': None,
                 'author': 'No author found.',
-                'url': 'http://example.com'
+                'url': 'http://example.com',
+                'filename': None,
             }
         }
     ),
@@ -162,9 +162,9 @@ book_data = [
         {
             1: {
                 'title': None,
-                'short_title': None,
                 'author': 'John Doe',
-                'url': 'No URLs found.'
+                'url': 'No URLs found.',
+                'filename': None,
             }
         }
     ),
@@ -177,9 +177,9 @@ book_data = [
         {
             1: {
                 'title': 'Sample Book',
-                'short_title': 'samplebook',
                 'author': 'No author found.',
-                'url': 'No URLs found.'
+                'url': 'No URLs found.',
+                'filename': 'samplebook.txt',
             }
         }
     ),
@@ -191,9 +191,9 @@ book_data = [
         {
             1: {
                 'title': None,
-                'short_title': None,
                 'author': 'No author found.',
-                'url': 'No URLs found.'
+                'url': 'No URLs found.',
+                'filename': None,
             }
         }
     ),

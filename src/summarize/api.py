@@ -10,10 +10,9 @@ from summarize.db import DB
 class Book:
     id: int = field(default=None)
     title: str = None
-    short_title: str = None
     author: str = None
     url: str = None
-    filepath: str = None
+    filename: str = None
 
     @classmethod
     def from_dict(cls, d):

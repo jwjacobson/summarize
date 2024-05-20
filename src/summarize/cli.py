@@ -18,15 +18,26 @@ SUMMARY_DIR = FILE_DIR / "summaries"
 
 app = typer.Typer()
 
+
+
 def get_default_books():
     print("\n[italic yellow]Retrieving default book data...")
     books = process_books(fetch_default_books())
+    # book_nums = []
     for book in books:
         with books_db() as db:
             db.add_book(Book.from_dict(books[book]))
+        # book_nums.append(book)
+    # return book_nums
     
 @app.command()
 def default():
+    with books_db() as db:
+        book_count = db.count()
+        if book_count:
+            db.delete_all()
+
+    # book_nums = get_default_books()
     get_default_books()
 
     table = Table(box=box.SQUARE_DOUBLE_HEAD, border_style="magenta")
@@ -52,7 +63,7 @@ def default():
     selected_book = books[int(choice) - 1]
     
     print(f"\nYou have chosen [bold cyan]{selected_book.title}[/bold cyan] by [bold magenta]{selected_book.author}[/bold magenta].")
-    filepath = FILE_DIR / Path(selected_book.filepath)
+    filepath = FILE_DIR / Path(selected_book.filename)
 
     if filepath.exists():
         print(f"The book has previously been saved to {filepath}.")
@@ -61,18 +72,17 @@ def default():
         write_text_to_file(selected_book.url, filepath)
         print(f"\nText of {selected_book.title} saved to {filepath}.")
 
-    choice = Prompt.ask("\nDo you want to print or save your summary?", choices=['print', 'save'], default='save')
+    choice = Prompt.ask("\nDo you want to [P]rint or [S]ave your summary?", choices=['p', 's'])
     chunks = IntPrompt.ask("How many lines per chunk?", default=400)
 
     if chunks < 50:
         print("[red bold]Warning[/red bold]: choosing a low value could take a lot of time and resources.")
         confirmation = Confirm.ask("Are you sure?")
         
-    if choice == 'print':
+    if choice == 'p':
         print_summary(filepath, chunks)
     else:
         target_filepath = SUMMARY_DIR / Path(selected_book.filepath)
-
         save_summary(filepath, target_filepath, chunks)
         print(f'\nSummary saved to {target_filepath}.')
 

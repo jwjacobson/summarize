@@ -64,9 +64,9 @@ def test_update_book(books_db, book_fixture):
     books_db.add_book(book)
     new_data = {
         "title": "Tomorrow's Yesterdays",
-        "short_title": "tomorrowsyesterdays",
         "author": "Clifton Semaphore",
-        "url": "https://www.csemaphore.com/2"
+        "url": "https://www.csemaphore.com/2",
+        "filename": "tomorrowsyesterdays.txt",
     }
 
     new_book = Book.from_dict(new_data)
@@ -75,9 +75,9 @@ def test_update_book(books_db, book_fixture):
 
     assert updated_book_data['id'] == book.id
     assert updated_book_data['title'] == new_data['title']
-    assert updated_book_data['short_title'] == new_data['short_title']
     assert updated_book_data['author'] == new_data['author']
     assert updated_book_data['url'] == new_data['url']
+    assert updated_book_data['filename'] == new_data['filename']
 
 
 

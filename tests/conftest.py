@@ -14,10 +14,9 @@ def book_fixture():
     book = Book(
         id=1,
         title="Yesterday's Tomorrows",
-        short_title="yesterdaystomorrows",
         author="Wilfred Sinecure",
         url="https://www.gutenberg.org/",
-        filepath=None
+        filename="yesterdaystomorrows.txt",
     )
 
     return book
