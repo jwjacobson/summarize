@@ -151,7 +151,8 @@ def process_books(books):
     return book_data
 
 if __name__ == "__main__":
-    books = process_books(fetch_default_books())
+    books = process_books(fetch_default_books()) 
+
     book_list = [book for book in books]
     for book in book_list:
         print(books[book]['filename'])
