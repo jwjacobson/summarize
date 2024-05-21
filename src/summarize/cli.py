@@ -32,9 +32,12 @@ def get_default_books():
     
 @app.command()
 def default():
+    """
+    Default behavior when given no CLI options: get the 32 most popular books and guide the user interactively through the summarization process.
+    """
     with books_db() as db:
         book_count = db.count()
-        if book_count:
+        if book_count:  # If there are any books in the db at this point they are leftover from previous incomplete executions
             db.delete_all()
 
     # book_nums = get_default_books()
@@ -82,7 +85,7 @@ def default():
     if choice == 'p':
         print_summary(filepath, chunks)
     else:
-        target_filepath = SUMMARY_DIR / Path(selected_book.filepath)
+        target_filepath = SUMMARY_DIR / Path(selected_book.filename+str(chunks))
         save_summary(filepath, target_filepath, chunks)
         print(f'\nSummary saved to {target_filepath}.')
 
