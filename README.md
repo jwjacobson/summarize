@@ -26,3 +26,8 @@ One morning, Samsa wakes from a nightmare and finds himself transformed into a "
 
 ### License
 Summarize is [free software](https://www.fsf.org/about/what-is-free-software), released under version 3.0 of the GPL. Everyone has the right to use, modify, and distribute Summarize subject to the [stipulations](https://github.com/jwjacobson/summarize/blob/main/LICENSE) of that license.
+
+### Acknowledgments
+The overall structure of the app is inspired by Brian Okken's [cards](https://github.com/okken/cards).
+The UI and (eventual) search functionality are inspired by [pybites-search](https://github.com/PyBites-Open-Source/search).
+The tone of user messages is doubtless inspired by countless hours of [Dungeon Crawl Stone Soup](https://crawl.develz.org/) over the years.
