@@ -7,7 +7,7 @@ Summarize is a CLI app written in **Python 3.12.1**. The CLI uses **Typer** and 
 Eventually Summarize will be packaged on pypi, but for now you can install it by cloning from Github. You'll need Python 3.12 or later installed.
 1. [Clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
 2. Navigate to the 'summarize' directory.
-3. Create a virtual environment ```python -m venv venv''' (Windows/Linux) or ```python3 -m venv venv``` (Mac).
+3. Create a virtual environment ```python -m venv venv``` (Windows/Linux) or ```python3 -m venv venv``` (Mac).
 4. Activate the virtual environment ```.\venv\Scripts\activate``` (Windows) or ```source venv/bin/activate```
 5. Install the necessary packages: ```pip install -r requirements.txt``` (There is also a requirements.in if you prefer to use pip-tools)
 
