@@ -85,7 +85,7 @@ def default():
     if choice == 'p':
         print_summary(filepath, chunks)
     else:
-        target_filepath = SUMMARY_DIR / Path(selected_book.filename+str(chunks))
+        target_filepath = SUMMARY_DIR / Path(selected_book.filename)
         save_summary(filepath, target_filepath, chunks)
         print(f'\nSummary saved to {target_filepath}.')
 
