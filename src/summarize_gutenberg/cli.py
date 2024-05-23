@@ -14,8 +14,14 @@ from summarize_gutenberg.api import Book, BooksDB
 FILE_DIR = Path("./files/")
 SUMMARY_DIR = FILE_DIR / "summaries"
 
-app = typer.Typer()
+def dir_check():
+    """Make sure the directories for saving files exist"""
+    FILE_DIR.mkdir(parents=True, exist_ok=True)
+    SUMMARY_DIR.mkdir(parents=True, exist_ok=True)
 
+dir_check()
+
+app = typer.Typer()
 
 
 def get_default_books():
