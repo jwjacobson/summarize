@@ -6,7 +6,6 @@ Author names are converted to First Middle Last format.
 
 import requests
 from .api import Book
-import ipdb
 
 
 def remove_parens(author):
@@ -92,10 +91,10 @@ def create_filename(title):
             continue
         else:
             res_list.append(char.lower())
-    
+
     res_list.append('.txt')
 
-    return ''.join(res_list)    
+    return ''.join(res_list)
 
 def fetch_default_books():
     """
@@ -125,7 +124,7 @@ def fetch_default_books():
 
 
 def process_books(books):
-    """ 
+    """
     Create a dictionary of fetched books where the key is a sequential number and the value is a dictionary of book info.
     """
     book_data = {}
@@ -151,7 +150,7 @@ def process_books(books):
     return book_data
 
 if __name__ == "__main__":
-    books = process_books(fetch_default_books()) 
+    books = process_books(fetch_default_books())
 
     book_list = [book for book in books]
     for book in book_list:

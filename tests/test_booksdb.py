@@ -1,7 +1,6 @@
 import pytest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import ipdb
 
 from summarize.api import Book, BooksDB
 

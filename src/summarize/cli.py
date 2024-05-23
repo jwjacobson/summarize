@@ -11,8 +11,6 @@ from summarize.get_text import write_text_to_file
 from summarize.make_summary import save_summary, print_summary
 from summarize.api import Book, BooksDB
 
-import ipdb
-
 FILE_DIR = Path("./files/")
 SUMMARY_DIR = FILE_DIR / "summaries"
 
@@ -29,7 +27,7 @@ def get_default_books():
     for book in books:
         with books_db() as db:
             db.add_book(Book.from_dict(books[book]))
-    
+
 @app.command()
 def default():
     """
@@ -63,7 +61,7 @@ def default():
         choice = Prompt.ask("[red]Please choose a number between 1 and 32")
 
     selected_book = books[int(choice) - 1]
-    
+
     print(f"\nYou have chosen [bold cyan]{selected_book.title}[/bold cyan] by [bold magenta]{selected_book.author}[/bold magenta].")
     filepath = FILE_DIR / Path(selected_book.filename)
 
@@ -80,7 +78,7 @@ def default():
     # if chunks < 50:
     #     print("[red bold]Warning[/red bold]: choosing a low value could take a lot of time and resources.")
     #     confirmation = Confirm.ask("Are you sure?")
-        
+
     if choice == 'p':
         print_summary(filepath, chunks)
     else:
