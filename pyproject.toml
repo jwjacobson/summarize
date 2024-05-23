@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "summarize"
+name = "summarize_gutenberg"
 version = "0.0.1"
 dependencies = [
     "tinydb",
@@ -57,7 +57,7 @@ tools = [
 ]
 
 [project.scripts]
-summarize = "summarize.cli:app"
+summarize = "summarize_gutenberg.cli:app"
 
 [tool.ruff]
 line-length = 100
