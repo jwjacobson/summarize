@@ -11,8 +11,6 @@ from summarize.get_text import write_text_to_file
 from summarize.make_summary import save_summary, print_summary
 from summarize.api import Book, BooksDB
 
-import ipdb
-
 FILE_DIR = Path("./files/")
 SUMMARY_DIR = FILE_DIR / "summaries"
 
