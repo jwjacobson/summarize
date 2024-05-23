@@ -5,8 +5,6 @@ Author names are converted to First Middle Last format.
 """
 
 import requests
-from .api import Book
-import ipdb
 
 
 def remove_parens(author):
