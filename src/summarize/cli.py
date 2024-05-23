@@ -21,14 +21,14 @@ app = typer.Typer()
 
 
 def get_default_books():
+    """
+    Get the default book info then populate the database with corresponding Book objects
+    """
     print("\n[italic yellow]Retrieving default book data...")
     books = process_books(fetch_default_books())
-    # book_nums = []
     for book in books:
         with books_db() as db:
             db.add_book(Book.from_dict(books[book]))
-        # book_nums.append(book)
-    # return book_nums
     
 @app.command()
 def default():
@@ -40,7 +40,6 @@ def default():
         if book_count:  # If there are any books in the db at this point they are leftover from previous incomplete executions
             db.delete_all()
 
-    # book_nums = get_default_books()
     get_default_books()
 
     table = Table(box=box.SQUARE_DOUBLE_HEAD, border_style="magenta")
@@ -78,9 +77,9 @@ def default():
     choice = Prompt.ask("\nDo you want to [P]rint or [S]ave your summary?", choices=['p', 's'])
     chunks = IntPrompt.ask("How many lines per chunk?", default=400)
 
-    if chunks < 50:
-        print("[red bold]Warning[/red bold]: choosing a low value could take a lot of time and resources.")
-        confirmation = Confirm.ask("Are you sure?")
+    # if chunks < 50:
+    #     print("[red bold]Warning[/red bold]: choosing a low value could take a lot of time and resources.")
+    #     confirmation = Confirm.ask("Are you sure?")
         
     if choice == 'p':
         print_summary(filepath, chunks)

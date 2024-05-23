@@ -79,7 +79,7 @@ def url_check(formats):
 
 def create_filename(title):
     """
-    Creates a filename for the book from a shortened version of its title.
+    Create a filename for the book from a shortened version of its title.
     """
     res_list = []
     colons = {':', ';'}

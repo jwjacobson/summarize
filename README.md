@@ -1,7 +1,7 @@
 # Summarize: generate abstractive summaries from Project Gutenberg books
 
 ### About the app
-Summarize is a CLI app written in **Python 3.12.1**. The CLI uses **Typer** and **Rich** for beautiful rich-text output. The app uses the [Gutendex API](https://gutendex.com/) to retrieve books from Project Gutenberg and the pszemraj's [pegasus-x-large-book-summary](https://huggingface.co/pszemraj/pegasus-x-large-book-summary) LLM to generate summaries.
+Summarize is a CLI app written in **Python 3.12.1**. The CLI uses **Typer** and **Rich** for beautiful rich-text output. The app uses the [Gutendex API](https://gutendex.com/) to retrieve books from Project Gutenberg and the pszemraj's [pegasus-x-large-book-summary](https://huggingface.co/pszemraj/pegasus-x-large-book-summary) LLM to generate abstractive summaries. The user can save summaries to a .txt file or print them to stdout for further piping.
 
 ### Local installation
 Eventually Summarize will be packaged on pypi, but for now you can install it by cloning from Github. You'll need Python 3.12 or later installed.
