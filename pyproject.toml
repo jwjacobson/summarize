@@ -42,6 +42,16 @@ classifiers = [
     "Topic :: Text Processing :: Linguistic"
 ]
 
+[project.optional-dependencies]
+test = [
+  "pytest",
+  "pytest-cov",
+]
+tools = [
+  "ruff",
+  "pre-commit",
+]
+
 [project.urls]
 Homepage = "https://github.com/jwjacobson/summarize"
 Issues = "https://github.com/jwjacobson/summarize/issues"
