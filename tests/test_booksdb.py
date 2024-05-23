@@ -2,7 +2,7 @@ import pytest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from summarize.api import Book, BooksDB
+from summarize_gutenberg.api import Book, BooksDB
 
 @pytest.fixture()
 def books_db():

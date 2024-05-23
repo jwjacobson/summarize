@@ -4,7 +4,7 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).parent.parent / "src"))
 
-from summarize.api import Book
+from summarize_gutenberg.api import Book
 
 @pytest.fixture()
 def book_fixture():

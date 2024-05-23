@@ -6,10 +6,10 @@ from rich.table import Table
 from pathlib import Path
 from contextlib import contextmanager
 
-from summarize.get_books import fetch_default_books, process_books
-from summarize.get_text import write_text_to_file
-from summarize.make_summary import save_summary, print_summary
-from summarize.api import Book, BooksDB
+from summarize_gutenberg.get_books import fetch_default_books, process_books
+from summarize_gutenberg.get_text import write_text_to_file
+from summarize_gutenberg.make_summary import save_summary, print_summary
+from summarize_gutenberg.api import Book, BooksDB
 
 FILE_DIR = Path("./files/")
 SUMMARY_DIR = FILE_DIR / "summaries"

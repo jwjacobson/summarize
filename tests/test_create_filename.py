@@ -1,5 +1,5 @@
 import pytest
-from summarize.get_books import create_filename
+from summarize_gutenberg.get_books import create_filename
 
 titles = [
     ('Dracula', 'dracula.txt'), # one word

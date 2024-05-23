@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from dataclasses import asdict
 from dataclasses import field
 
-from summarize.db import DB
+from summarize_gutenberg.db import DB
 
 @dataclass
 class Book:
