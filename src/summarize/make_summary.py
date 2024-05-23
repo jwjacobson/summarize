@@ -27,7 +27,6 @@ def make_summary(chunk):
 
 
 def save_summary(source, target, chunk_size):
-
     with open(target,'w') as target:  
         for chunk in read_in_chunks(source, chunk_size=chunk_size):
             target.write(make_summary(' '.join(chunk)))

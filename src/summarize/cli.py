@@ -21,6 +21,9 @@ app = typer.Typer()
 
 
 def get_default_books():
+    """
+    Get the default book info then populate the database with corresponding Book objects
+    """
     print("\n[italic yellow]Retrieving default book data...")
     books = process_books(fetch_default_books())
     for book in books:
