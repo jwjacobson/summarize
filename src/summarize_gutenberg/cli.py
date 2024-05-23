@@ -16,8 +16,12 @@ SUMMARY_DIR = FILE_DIR / "summaries"
 
 def dir_check():
     """Make sure the directories for saving files exist"""
-    FILE_DIR.mkdir(parents=True, exist_ok=True)
-    SUMMARY_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        FILE_DIR.mkdir(parents=True, exist_ok=True)
+        SUMMARY_DIR.mkdir(parents=True, exist_ok=True)
+        print("File directories created.")
+    except Exception as e:
+        print(f"Error creating directories: {e}")
 
 dir_check()
 
