@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "summarize_gutenberg"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
     "tinydb",
     "requests",
@@ -17,7 +17,7 @@ requires-python = ">=3.12"
 authors = [
   { name="Jeff Jacobson", email="jeffjacobsonhimself@gmail.com" },
 ]
-description = "A jazz repertoire management app"
+description = "Generate abstractive summaries of Project Gutenberg tests"
 readme = "README.md"
 license = {file = "LICENSE"}
 keywords = ["abstractive summary", "literature", "books", "LLM", "Pegasus"]
