@@ -24,7 +24,6 @@ keywords = ["abstractive summary", "literature", "books", "LLM", "Pegasus"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
-    "Framework :: Pytest",
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
     "Intended Audience :: End Users/Desktop",
