@@ -112,6 +112,7 @@ def is_valid_utf8(byte_sequence):
     except UnicodeDecodeError:
         return False
 
+
 def strip_headers(text):
     lines = text.splitlines()
     sep = os.linesep
@@ -159,6 +160,7 @@ def strip_headers(text):
 
     return str(sep.join(out), encoding="utf-8")
 
+
 def write_text_to_file(url, file_path):
     text_request = requests.get(url, stream=True)
 
@@ -168,7 +170,7 @@ def write_text_to_file(url, file_path):
     text_content = text_request.content
     cleaned_text = strip_headers(text_content)
 
-    with open(file_path, "w", encoding='utf-8') as file:
+    with open(file_path, "w", encoding="utf-8") as file:
         file.write(cleaned_text)
 
     return file_path

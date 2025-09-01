@@ -4,6 +4,7 @@ from dataclasses import field
 
 from summarize_gutenberg.db import DB
 
+
 @dataclass
 class Book:
     id: int = field(default=None)
@@ -15,9 +16,9 @@ class Book:
     @classmethod
     def from_dict(cls, d):
         return Book(**d)
+
     def to_dict(self):
         return asdict(self)
-
 
 
 class BooksDB:
@@ -37,7 +38,7 @@ class BooksDB:
         if db_item is not None:
             return Book.from_dict(db_item)
         # else:
-            # raise InvalidBookId(book_id)
+        # raise InvalidBookId(book_id)
 
     def list_books(self):
         """Return a list of books."""
@@ -59,7 +60,7 @@ class BooksDB:
         """Remove a book from db with given book_id."""
         self._db.delete(book_id)
         # except KeyError as exc:
-            # raise InvalidBookId(book_id) from exc
+        # raise InvalidBookId(book_id) from exc
 
     def delete_all(self) -> None:
         """Remove all books from db."""

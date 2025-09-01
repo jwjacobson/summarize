@@ -75,13 +75,14 @@ def url_check(formats):
 
     return url
 
+
 def create_filename(title):
     """
     Create a filename for the book from a shortened version of its title.
     """
     res_list = []
-    colons = {':', ';'}
-    puncts = {',', ' ', '.', '—', '-', "'", '"'}
+    colons = {":", ";"}
+    puncts = {",", " ", ".", "—", "-", "'", '"'}
 
     for char in title:
         if char in colons:
@@ -90,10 +91,11 @@ def create_filename(title):
             continue
         else:
             res_list.append(char.lower())
-    
-    res_list.append('.txt')
 
-    return ''.join(res_list)    
+    res_list.append(".txt")
+
+    return "".join(res_list)
+
 
 def fetch_default_books():
     """
@@ -123,7 +125,7 @@ def fetch_default_books():
 
 
 def process_books(books):
-    """ 
+    """
     Create a dictionary of fetched books where the key is a sequential number and the value is a dictionary of book info.
     """
     book_data = {}
@@ -148,9 +150,10 @@ def process_books(books):
 
     return book_data
 
+
 if __name__ == "__main__":
-    books = process_books(fetch_default_books()) 
+    books = process_books(fetch_default_books())
 
     book_list = [book for book in books]
     for book in book_list:
-        print(books[book]['filename'])
+        print(books[book]["filename"])
